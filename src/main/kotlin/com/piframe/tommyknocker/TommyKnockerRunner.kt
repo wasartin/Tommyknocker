@@ -8,24 +8,22 @@ import java.io.File
 import java.time.LocalTime
 
 @Service
-class TommyKnockerRunner(
-    @Autowired private var photoAlbum: Album
-) {
+class TommyKnockerRunner() {
 
+    var photoAlbum: Album? = null
     var displayCurrentPoster = true
 
-    @PostConstruct
-    fun main(args: Array<String>) {
+    init {
         println("Startup")
         //var directoryFilePath = "/Users/wsartin/dev/workshop/piframe-display/resrc/jpgPosters"
         //var directoryFilePath = "/home/piframe/dev/photo-db/posters/jpg/"
         var directoryFilePath = "/Users/wsartin/dev/workshop/photo-db/posters/jpg"
         var intervalInMinutes = 15
-        if (args.isNotEmpty()) {
-            directoryFilePath = args[0]
-            intervalInMinutes = args[1].toInt()
-            println("New intervalInMinutes: $intervalInMinutes")
-        }
+//        if (args.isNotEmpty()) {
+//            directoryFilePath = args[0]
+//            intervalInMinutes = args[1].toInt()
+//            println("New intervalInMinutes: $intervalInMinutes")
+//        }
         photoAlbum = Album(directoryFilePath)
         run(intervalInMinutes)
     }

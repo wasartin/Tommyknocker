@@ -1,10 +1,10 @@
 package com.piframe.tommyknocker.model
 
+import org.springframework.context.annotation.Bean
 import java.io.File
 import java.util.*
 
 class Album(directory: String) {
-    //private val shuffledDirectory = ArrayList<File?>()
     private val shuffledDirectory = ArrayList<String>()
     private var index = 0
 
