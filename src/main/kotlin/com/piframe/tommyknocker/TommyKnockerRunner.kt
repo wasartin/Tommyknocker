@@ -40,6 +40,7 @@ class TommyKnockerRunner() {
                     Thread.sleep(5)
                     if (LocalTime.now().isAfter(endTime)) {
                         displayCurrentPoster = false
+                        // Hit endpoint to kill
                     }
                 }
             }
@@ -61,50 +62,6 @@ class TommyKnockerRunner() {
             println(e)
         }
 
-
-
-
     }
 
-    // Other way
-//    try{
-//        val process: Process = processBuilder.start()
-//        val reader = BufferedReader(InputStreamReader(process.inputStream))
-//        val line = reader.readText();
-//        val exitVal = process.waitFor()
-//        if (exitVal == 0) {
-//            println("Success!")
-//            exitProcess(0)
-//        } else {
-//            println("Something bad")
-//            println(line)
-//            exitProcess(0)
-//        }
-//    } catch(e: Exception) {
-//        println("Something went wrong")
-//        println(e)
-//    }
-
-
-//    val GRADLE_INSTALLATION = "/usr/local/Cellar/gradle/8.3"
-//
-//    val GRADLE_PROJECT_DIRECTORY = "~/dev/workshop/display/";
-//    val GRADLE_TASK = "run";
-//
-//    val gradleConn = GradleConnector.newConnector();
-//    gradleConn.useInstallation(File(GRADLE_INSTALLATION));
-//    gradleConn.forProjectDirectory(File(GRADLE_PROJECT_DIRECTORY));
-//
-//    val connection: ProjectConnection = gradleConn.connect()
-//    val build = connection.newBuild()
-//    build.forTasks(GRADLE_TASK)
-//
-//    println("About to start Gradle")
-//    try{
-//        build.run()
-//        connection.close()
-//    } catch(e: Exception) {
-//        println("Well shoot")
-//        println(e)
-//    }
 }
