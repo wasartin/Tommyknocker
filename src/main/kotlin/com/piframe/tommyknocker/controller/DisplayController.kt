@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 
 @RestController
-@RequestMapping("/v1/display")
+@RequestMapping("/v1/display/images")
 class DisplayController {
 
     /**
@@ -20,8 +20,8 @@ class DisplayController {
     /**
      * Receive a directory location of image files to cycle through
      */
-    @PostMapping()
-    fun setImageDirectory(): ResponseEntity<String>{
+    @PostMapping("/{directory}")
+    fun setImageDirectory(@PathVariable directory: String): ResponseEntity<String>{
         println("Setting files to iterate to given image Directory")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
@@ -29,8 +29,8 @@ class DisplayController {
     /**
      * Request specific image to display
      */
-    @PutMapping()
-    fun setImageToDisplay(): ResponseEntity<String>{
+    @PutMapping("/{imageFileName}")
+    fun setImageToDisplay(@PathVariable imageFileName: String): ResponseEntity<String>{
         println("Display image requested")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
@@ -38,7 +38,7 @@ class DisplayController {
     /**
      * Request next image to display
      */
-    @PutMapping()
+    @PutMapping("/next")
     fun nextImage(): ResponseEntity<String>{
         println("Going to the next image")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
@@ -47,7 +47,7 @@ class DisplayController {
     /**
      * Request previous image to display
      */
-    @PutMapping()
+    @PutMapping("/previous")
     fun previousImage(): ResponseEntity<String>{
         println("Going back to the previous image")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
@@ -56,8 +56,8 @@ class DisplayController {
     /**
      * Request set time for display interval
      */
-    @PutMapping()
-    fun setTimeForDisplayInterval(): ResponseEntity<String>{
+    @PutMapping("/interval/{intervalInMinutes}")
+    fun setTimeForDisplayInterval(@PathVariable intervalInMinutes: Int): ResponseEntity<String>{
         println("Updating time for display interval")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
