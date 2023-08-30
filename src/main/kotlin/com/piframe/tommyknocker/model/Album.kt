@@ -11,19 +11,12 @@ class Album() {
     private val shuffledDirectory = ArrayList<String>()
     private var index = 0
 
-    // Will need to use at some point
-//    @Autowired
-//    private val env: Environment? = null
-
     private var directory: String? = null
 
     // Debugging memory issue
     private var fullCycle = 1
 
     init {
-
-        println("Album")
-
         val currentDirectory = File(directory?: "/Users/wsartin/dev/workshop/photo-db/posters/jpg")
         val files = currentDirectory.listFiles()
         val filesNames:MutableList<String> = mutableListOf()
