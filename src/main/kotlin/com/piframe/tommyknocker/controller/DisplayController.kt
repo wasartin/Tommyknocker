@@ -12,17 +12,11 @@ class DisplayController(
     @Autowired private val displayService: DisplayService
 ) {
 
-    @GetMapping("/hello")
-    fun simpleResponse(): String {
-        return "Hello yourself"
-    }
-
     /**
      * Get a list of available image files to display
      */
     @GetMapping()
     fun getListOfAvailableImageFilesToDisplay(): ResponseEntity<*> {
-        println("Listing current files of available images to display")
         val results = displayService.getListFromPhotoAlbum()
         return ResponseEntity.ok(results)
     }
