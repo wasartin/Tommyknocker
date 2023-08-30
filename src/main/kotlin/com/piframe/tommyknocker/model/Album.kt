@@ -1,18 +1,30 @@
 package com.piframe.tommyknocker.model
 
-import org.springframework.context.annotation.Bean
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.env.Environment
+import org.springframework.stereotype.Component
 import java.io.File
 import java.util.*
 
-class Album(directory: String) {
+@Component
+class Album() {
     private val shuffledDirectory = ArrayList<String>()
     private var index = 0
+
+    // Will need to use at some point
+//    @Autowired
+//    private val env: Environment? = null
+
+    private var directory: String? = null
 
     // Debugging memory issue
     private var fullCycle = 1
 
     init {
-        val currentDirectory = File(directory)
+
+        println("Album")
+
+        val currentDirectory = File(directory?: "/Users/wsartin/dev/workshop/photo-db/posters/jpg")
         val files = currentDirectory.listFiles()
         val filesNames:MutableList<String> = mutableListOf()
         files?.map{
@@ -50,4 +62,6 @@ class Album(directory: String) {
         }
         return shuffledDirectory[index]
     }
+
+    fun getList() = shuffledDirectory
 }

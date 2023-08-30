@@ -1,20 +1,30 @@
 package com.piframe.tommyknocker.controller
 
+import com.piframe.tommyknocker.service.DisplayService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 
 @RestController
 @RequestMapping("/v1/display/images")
-class DisplayController {
+class DisplayController(
+    @Autowired private val displayService: DisplayService
+) {
+
+    @GetMapping("/hello")
+    fun simpleResponse(): String {
+        return "Hello yourself"
+    }
 
     /**
      * Get a list of available image files to display
      */
     @GetMapping()
-    fun getListOfAvailableImageFilesToDisplay(): ResponseEntity<String> {
+    fun getListOfAvailableImageFilesToDisplay(): ResponseEntity<*> {
         println("Listing current files of available images to display")
-        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+        val results = displayService.getListFromPhotoAlbum()
+        return ResponseEntity.ok(results)
     }
 
     /**
