@@ -3,6 +3,7 @@ package com.piframe.tommyknocker.model
 import org.springframework.stereotype.Component
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Component
 class Album {
@@ -30,7 +31,7 @@ class Album {
         shuffledDirectory.shuffle()
     }
 
-    operator fun next(): String {
+    fun next(): String {
         if (index >= (shuffledDirectory.size)) {
             shuffledDirectory.shuffle()
             index = 0
@@ -41,18 +42,23 @@ class Album {
     }
 
     /**
-     * TODO: Should this wrap around?
-     * 0 -> shuffedDirectory.size - 1
+     * Call the previous miage
+     * Wraps around if at first Index
      */
     fun previous(): String {
         index--
         if (index < 0) {
-            index = 0
+            index = shuffledDirectory.size - 1
         }
-        return shuffledDirectory.get(index) ?: ""
+        return shuffledDirectory[index]
     }
 
-    fun getList() = shuffledDirectory
+    /**
+     * Return list of file locations of each image as a String
+     */
+    fun getList(): ArrayList<String> {
+        return shuffledDirectory
+    }
 
     /**
      * Extension File function to ensure image has correct file extension.
