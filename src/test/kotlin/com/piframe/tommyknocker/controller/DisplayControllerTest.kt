@@ -1,6 +1,5 @@
 package com.piframe.tommyknocker.controller
 
-import junit.framework.Assert.assertEquals
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -11,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit4.SpringRunner
+
 //import org.springframework.transaction.annotation.Transactional
 
 //@Transactional
@@ -44,5 +44,17 @@ class DisplayControllerTest {
         Assertions.assertEquals(HttpStatus.OK, result.statusCode)
         assertTrue(updateDirectoryBodyResults.isNotEmpty())
         assertNotEquals(allImagesOriginal, allImagesUpdated)
+    }
+
+    @Test
+    fun `Given the system is running, when requesting which image is being displayed, return current image `() {
+        val getAllImageResultOriginal = testRestTemplate.getForEntity("/v1/display/images", String::class.java)
+        val allImagesOriginal = (getAllImageResultOriginal.body as String)
+
+        val result = testRestTemplate.getForEntity("/v1/display/images/current", String::class.java)
+        val contents = (result.body as String)
+
+        assertTrue(contents.isNotBlank())
+        assertTrue(allImagesOriginal.contains(contents))
     }
 }

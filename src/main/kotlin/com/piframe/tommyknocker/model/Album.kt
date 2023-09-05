@@ -41,7 +41,7 @@ class Album {
             println("Full cycles: ${fullCycle}, reshuffling images")
             fullCycle++
         }
-        return shuffledDirectory.get(index++) ?: ""
+        return shuffledDirectory.get(index++)
     }
 
     /**

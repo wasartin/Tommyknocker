@@ -26,8 +26,6 @@ class DisplayController(
      */
     @PostMapping("/directory")
     fun setImageDirectory(@RequestBody directory: String): ResponseEntity<String>{
-        println("Setting files to iterate to given image Directory")
-        println(directory)
         val success = displayService.setNewImageDirectory(directory)
         if(success){
             return ResponseEntity.ok(directory)
@@ -36,11 +34,14 @@ class DisplayController(
     }
 
     /**
-     * Request specific image to display
+     * TODO: Merge into getListOfAvailableImageFilesToDisplay() endpoint
      */
-    @PutMapping("/{imageFileName}")
-    fun setImageToDisplay(@PathVariable imageFileName: String): ResponseEntity<String>{
-        println("Display image requested")
+    @GetMapping("/current")
+    fun getCurrentImageDisplayed(): ResponseEntity<String> {
+        val result = displayService.getCurrentImageDisplayed()
+        if(result.isNotBlank()){
+            return ResponseEntity.ok(result)
+        }
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 
@@ -59,6 +60,15 @@ class DisplayController(
     @PutMapping("/previous")
     fun previousImage(): ResponseEntity<String>{
         println("Going back to the previous image")
+        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+    }
+
+    /**
+     * Request specific image to display
+     */
+    @PutMapping("/{imageFileName}")
+    fun setImageToDisplay(@PathVariable imageFileName: String): ResponseEntity<String>{
+        println("Display image requested")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 

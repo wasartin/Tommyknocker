@@ -12,6 +12,10 @@ class DisplayService(
     @Autowired val album: Album
     ) {
 
+    private var currentImage: String = "loading"
+
+    init{ currentImage = album.next()}
+
     fun getListFromPhotoAlbum(): List<String> {
         return album.getList()
     }
@@ -23,7 +27,12 @@ class DisplayService(
     //@Scheduled(cron = "0 0/15 * * * ?")   // 15
     @Scheduled(cron = "0 * * * * *")        // 1
     private fun startDisplay() {
-        runner.run(album.next())
+        runner.run(currentImage)
+        currentImage = album.next()
+    }
+
+    fun getCurrentImageDisplayed(): String {
+        return currentImage
     }
 
 }
