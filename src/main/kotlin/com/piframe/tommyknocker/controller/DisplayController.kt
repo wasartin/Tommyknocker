@@ -24,9 +24,14 @@ class DisplayController(
     /**
      * Receive a directory location of image files to cycle through
      */
-    @PostMapping("/{directory}")
-    fun setImageDirectory(@PathVariable directory: String): ResponseEntity<String>{
+    @PostMapping("/directory")
+    fun setImageDirectory(@RequestBody directory: String): ResponseEntity<String>{
         println("Setting files to iterate to given image Directory")
+        println(directory)
+        val success = displayService.setNewImageDirectory(directory)
+        if(success){
+            return ResponseEntity.ok(directory)
+        }
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 

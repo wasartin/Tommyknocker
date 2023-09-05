@@ -17,8 +17,10 @@ class Album {
         updateAlbum("/Users/wsartin/dev/workshop/photo-db/posters/jpg") //TODO: Update to env var
     }
 
-    fun updateAlbum(directory: String){
+    fun updateAlbum(directory: String): Boolean {
         val currentDirectory = File(directory)
+        if(!currentDirectory.isDirectory) return false
+
         val files = currentDirectory.listFiles()
         val filesNames:MutableList<String> = mutableListOf()
         files?.map{
@@ -29,6 +31,7 @@ class Album {
         shuffledDirectory = ArrayList<String>()
         shuffledDirectory.addAll(filesNames)
         shuffledDirectory.shuffle()
+        return true
     }
 
     fun next(): String {

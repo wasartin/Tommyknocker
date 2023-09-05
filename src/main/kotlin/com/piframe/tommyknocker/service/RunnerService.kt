@@ -7,15 +7,12 @@ import org.springframework.stereotype.Service
 import java.io.File
 
 @Service
-class RunnerService(@Autowired private val photoAlbum: Album) {
+class RunnerService {
 
-    // 15 minutes
-    //@Scheduled(cron = "0 0/15 * * * ?")
-    @Scheduled(cron = "0 * * * * *")
-    fun run() {
+    fun run(fileToDisplay: String) {
         killCurrentDisplay()
         try {
-            val currentImage = File(photoAlbum.next())
+            val currentImage = File(fileToDisplay)
             showPoster(currentImage)
         } catch (e: Exception) {
             println("Error running ")
@@ -29,21 +26,19 @@ class RunnerService(@Autowired private val photoAlbum: Album) {
         println("Mock kill current display")
     }
 
-    fun imageList(): List<String>{
-        return photoAlbum.getList()
-    }
-
     /**
      * Call Kotlin Display program
      */
     fun showPoster(image: File) {
-        val command = "../display/gradlew -p ../display run"
-        try {
-            Runtime.getRuntime().exec(command)
-        } catch (e: Exception){
-            println("Oh Shoot")
-            println(e)
-        }
+        println("Showing poster -> ${image.absolutePath}")
+        println("MOCKING")
+//        val command = "../display/gradlew -p ../display runs
+//        try {
+//            Runtime.getRuntime().exec(command)
+//        } catch (e: Exception){
+//            println("Oh Shoot")
+//            println(e)
+//        }
     }
 
 }
