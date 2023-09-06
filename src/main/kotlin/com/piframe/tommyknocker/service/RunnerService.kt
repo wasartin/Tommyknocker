@@ -31,7 +31,7 @@ class RunnerService {
      */
     fun showPoster(image: File) {
         println("Showing poster -> ${image.absolutePath}")
-        val command = "../display/gradlew -p ../display runs
+        val command = "../display/gradlew -p ../display run"
         try {
             Runtime.getRuntime().exec(command)
         } catch (e: Exception){
