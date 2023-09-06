@@ -12,17 +12,11 @@ class DisplayController(
     @Autowired private val displayService: DisplayService
 ) {
 
-    @GetMapping("/hello")
-    fun simpleResponse(): String {
-        return "Hello yourself"
-    }
-
     /**
      * Get a list of available image files to display
      */
     @GetMapping()
     fun getListOfAvailableImageFilesToDisplay(): ResponseEntity<*> {
-        println("Listing current files of available images to display")
         val results = displayService.getListFromPhotoAlbum()
         return ResponseEntity.ok(results)
     }
@@ -30,9 +24,48 @@ class DisplayController(
     /**
      * Receive a directory location of image files to cycle through
      */
-    @PostMapping("/{directory}")
-    fun setImageDirectory(@PathVariable directory: String): ResponseEntity<String>{
-        println("Setting files to iterate to given image Directory")
+    @PostMapping("/directory")
+    fun setImageDirectory(@RequestBody directory: String): ResponseEntity<String>{
+        val success = displayService.setNewImageDirectory(directory)
+        if(success){
+            return ResponseEntity.ok(directory)
+        }
+        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+    }
+
+    /**
+     * TODO: Merge into getListOfAvailableImageFilesToDisplay() endpoint
+     */
+    @GetMapping("/current")
+    fun getCurrentImageDisplayed(): ResponseEntity<String> {
+        val result = displayService.getCurrentImageDisplayed()
+        if(result.isNotBlank()){
+            return ResponseEntity.ok(result)
+        }
+        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+    }
+
+    /**
+     * Request next image to display
+     */
+    @GetMapping("/next")
+    fun nextImage(): ResponseEntity<String>{
+        val result = displayService.next()
+        if(result.isNotBlank()){
+            return ResponseEntity.ok(result)
+        }
+        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+    }
+
+    /**
+     * Request previous image to display
+     */
+    @GetMapping("/previous")
+    fun previousImage(): ResponseEntity<String>{
+        val result = displayService.previous()
+        if(result.isNotBlank()){
+            return ResponseEntity.ok(result)
+        }
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 
@@ -42,24 +75,6 @@ class DisplayController(
     @PutMapping("/{imageFileName}")
     fun setImageToDisplay(@PathVariable imageFileName: String): ResponseEntity<String>{
         println("Display image requested")
-        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
-    }
-
-    /**
-     * Request next image to display
-     */
-    @PutMapping("/next")
-    fun nextImage(): ResponseEntity<String>{
-        println("Going to the next image")
-        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
-    }
-
-    /**
-     * Request previous image to display
-     */
-    @PutMapping("/previous")
-    fun previousImage(): ResponseEntity<String>{
-        println("Going back to the previous image")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 
