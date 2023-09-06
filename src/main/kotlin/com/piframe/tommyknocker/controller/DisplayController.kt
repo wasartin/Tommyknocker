@@ -48,18 +48,24 @@ class DisplayController(
     /**
      * Request next image to display
      */
-    @PutMapping("/next")
+    @GetMapping("/next")
     fun nextImage(): ResponseEntity<String>{
-        println("Going to the next image")
+        val result = displayService.next()
+        if(result.isNotBlank()){
+            return ResponseEntity.ok(result)
+        }
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 
     /**
      * Request previous image to display
      */
-    @PutMapping("/previous")
+    @GetMapping("/previous")
     fun previousImage(): ResponseEntity<String>{
-        println("Going back to the previous image")
+        val result = displayService.previous()
+        if(result.isNotBlank()){
+            return ResponseEntity.ok(result)
+        }
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 

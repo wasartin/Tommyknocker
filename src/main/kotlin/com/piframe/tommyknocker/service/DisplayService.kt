@@ -35,4 +35,16 @@ class DisplayService(
         return currentImage
     }
 
+    fun next(): String {
+        currentImage = album.next()
+        startDisplay()
+        return currentImage
+    }
+
+    fun previous(): String {
+        currentImage = album.next()
+        startDisplay()
+        return currentImage
+    }
+
 }

@@ -8,6 +8,7 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.test.web.client.postForEntity
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit4.SpringRunner
 
@@ -56,5 +57,35 @@ class DisplayControllerTest {
 
         assertTrue(contents.isNotBlank())
         assertTrue(allImagesOriginal.contains(contents))
+    }
+
+    @Test
+    fun `Given the system is running, when requesting the next image to be displayed, should return the next image from current image endpoint`(){
+        val originalImageResult = testRestTemplate.getForEntity("/v1/display/images/current", String::class.java)
+        val originalImage = (originalImageResult.body as String)
+
+        val nextImageResult = testRestTemplate.getForEntity("/v1/display/images/next", String::class.java)
+        val nextImage = (nextImageResult.body as String)
+
+        val currentImageResult = testRestTemplate.getForEntity("/v1/display/images/current", String::class.java)
+        val currentImage = (currentImageResult.body as String)
+
+        assertTrue(nextImage != originalImage)
+        assertTrue(nextImage == currentImage)
+    }
+
+    @Test
+    fun `Given the system is running, when requesting the previous image to be displayed, should return the previous image from current image endpoint`() {
+        val originalImageResult = testRestTemplate.getForEntity("/v1/display/images/current", String::class.java)
+        val originalImage = (originalImageResult.body as String)
+
+        val previousImageResult = testRestTemplate.getForEntity("/v1/display/images/previous", String::class.java)
+        val previousImage = (previousImageResult.body as String)
+
+        val currentImageResult = testRestTemplate.getForEntity("/v1/display/images/current", String::class.java)
+        val currentImage = (currentImageResult.body as String)
+
+        assertTrue(previousImage != originalImage)
+        assertTrue(previousImage == currentImage)
     }
 }

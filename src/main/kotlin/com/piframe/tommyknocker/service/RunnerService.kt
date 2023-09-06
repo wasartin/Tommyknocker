@@ -36,7 +36,7 @@ class RunnerService {
 //        try {
 //            Runtime.getRuntime().exec(command)
 //        } catch (e: Exception){
-//            println("Oh Shoot")
+//            println("Failure in running display program")
 //            println(e)
 //        }
     }
