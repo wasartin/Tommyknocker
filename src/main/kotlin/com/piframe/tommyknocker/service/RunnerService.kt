@@ -31,14 +31,13 @@ class RunnerService {
      */
     fun showPoster(image: File) {
         println("Showing poster -> ${image.absolutePath}")
-        println("MOCKING")
-//        val command = "../display/gradlew -p ../display runs
-//        try {
-//            Runtime.getRuntime().exec(command)
-//        } catch (e: Exception){
-//            println("Failure in running display program")
-//            println(e)
-//        }
+        val command = "../display/gradlew -p ../display runs
+        try {
+            Runtime.getRuntime().exec(command)
+        } catch (e: Exception){
+            println("Failure in running display program")
+            println(e)
+        }
     }
 
 }
