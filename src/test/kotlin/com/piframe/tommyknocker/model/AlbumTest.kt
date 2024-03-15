@@ -18,6 +18,17 @@ class AlbumTest {
     }
 
     @Test
+    fun `Given a list of files, when setting a new album, then should create album from list`(){
+        var firstImage = "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs/battleOfJutlan1916.jpeg"
+        var secondImage = "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs/iSpy.png"
+
+        val initialAlbum = Album()
+
+        var result = initialAlbum.updateAlbum(listOf(firstImage, secondImage))
+        assertTrue(result == 2)
+    }
+
+    @Test
     fun `Given an Album, when requesting next image, then should shuffle images after a full cycle`(){
         val album = Album()
         val originalContents = album.getList().toString()
@@ -37,5 +48,12 @@ class AlbumTest {
         val lastImageFromPreviousCommand = album.previous()
 
         assertTrue(lastImage == lastImageFromPreviousCommand)
+    }
+
+    // Why did i want to do this?
+    @Test
+    fun `Update the way album holds data, Not just strings now, but data`(){
+
+
     }
 }

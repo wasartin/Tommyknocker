@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
-//Move the album into this
 @Service
 class DisplayService(
     @Autowired val runner: RunnerService,
@@ -14,7 +13,7 @@ class DisplayService(
 
     private var currentImage: String = "loading"
 
-    init{ currentImage = album.next()}
+    init { currentImage = album.next() }
 
     fun getListFromPhotoAlbum(): List<String> {
         return album.getList()
@@ -24,8 +23,9 @@ class DisplayService(
         return album.updateAlbum(newDirectory)
     }
 
-    //@Scheduled(cron = "0 0/15 * * * ?")   // 15
-    @Scheduled(cron = "0 * * * * *")        // 1
+    // ToDo: This could probably just take the direction of next/prev
+    //@Scheduled(cron = "0 0/15 * * * ?")   // 15 minutes
+    @Scheduled(cron = "0 * * * * *")        // 1 minutes
     private fun startDisplay() {
         runner.run(currentImage)
         currentImage = album.next()
@@ -42,9 +42,8 @@ class DisplayService(
     }
 
     fun previous(): String {
-        currentImage = album.next()
+        currentImage = album.previous()
         startDisplay()
         return currentImage
     }
-
 }

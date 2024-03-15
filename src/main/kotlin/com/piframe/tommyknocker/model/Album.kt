@@ -8,9 +8,10 @@ import kotlin.collections.ArrayList
 @Component
 class Album {
     private var shuffledDirectory = ArrayList<String>()
+    private var directoryOfImages = null
     private var index = 0
 
-    // Debugging memory issue
+    // Debugging memory issues
     private var fullCycle = 1
 
     init {
@@ -34,6 +35,24 @@ class Album {
         return true
     }
 
+    fun updateAlbum(imageFiles: List<String>): Int {
+        val fileNames:MutableList<String> = mutableListOf()
+        for(img in imageFiles){
+            if(File(img).isValidImage()){
+                fileNames.add(img);
+            }
+        }
+
+        return updateShuffledImages(fileNames)
+    }
+
+    private fun updateShuffledImages(images: List<String>): Int{
+        shuffledDirectory = ArrayList()
+        shuffledDirectory.addAll(images)
+        shuffledDirectory.shuffle()
+        return shuffledDirectory.size
+    }
+
     fun next(): String {
         if (index >= (shuffledDirectory.size)) {
             shuffledDirectory.shuffle()
@@ -45,7 +64,7 @@ class Album {
     }
 
     /**
-     * Call the previous miage
+     * Call the previous image
      * Wraps around if at first Index
      */
     fun previous(): String {
@@ -71,5 +90,4 @@ class Album {
         val extension = this.name.lowercase(Locale.getDefault())
         return extension.endsWith(".jpg") || extension.endsWith(".jpeg") || extension.endsWith(".png")
     }
-
 }

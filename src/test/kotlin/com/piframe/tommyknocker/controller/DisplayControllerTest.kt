@@ -88,4 +88,30 @@ class DisplayControllerTest {
         assertTrue(previousImage != originalImage)
         assertTrue(previousImage == currentImage)
     }
+
+    @Test
+    fun `Given the Display endpoint, when requesting a specific image to display, should display the image`(){
+        val getAllImagesResultOriginal = testRestTemplate.getForEntity("/v1/display/images", String::class.java)
+        val allImages = (getAllImagesResultOriginal.body as String)
+
+        val originalCurrentImageResult = testRestTemplate.getForEntity("/v1/display/images/current", String::class.java)
+        val originalCurrentImage = (originalCurrentImageResult.body as String)
+
+        val oneOfTheImages = oneOfThem(allImages)
+
+        val setImageResult = testRestTemplate.postForEntity("v1/display/images", oneOfTheImages, String::class.java)
+        val imageSet = setImageResult.body
+
+        val currentImageResult = testRestTemplate.getForEntity("/v1/display/images/current", String::class.java)
+        val currentImage = (currentImageResult.body as String)
+
+        assertTrue(originalCurrentImage != imageSet)
+        assertTrue(originalCurrentImage != currentImage)
+        assertTrue(currentImage == imageSet)
+    }
+
+    // Mocked. Will need to refactor a json response back of the image objects
+    private fun oneOfThem(input: String): String{
+        return ""
+    }
 }

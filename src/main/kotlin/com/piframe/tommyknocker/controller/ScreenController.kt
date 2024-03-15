@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 
 @RestController
-@RequestMapping("/v1/display/images")
-class DisplayController(
+@RequestMapping("/v1/display/images") // ToDo: rename to something like /screens
+class ScreenController(
     @Autowired private val displayService: DisplayService
 ) {
 
