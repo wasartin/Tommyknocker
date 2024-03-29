@@ -35,11 +35,11 @@ class Album {
         return true
     }
 
-    fun updateAlbum(imageFiles: List<String>): Int {
+    fun updateAlbum(imageFiles: List<ImageRequest>): Int {
         val fileNames:MutableList<String> = mutableListOf()
         for(img in imageFiles){
-            if(File(img).isValidImage()){
-                fileNames.add(img);
+            if(File(img.filePath).isValidImage()){
+                fileNames.add(img.filePath);
             }
         }
 
