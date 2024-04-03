@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
  * Endpoint for runner to communicate back to the tommy knocker. s
  */
 @RestController
-@RequestMapping("/v1/receivers") // ToDo: rename to something like /screens
+@RequestMapping("/v1/receiver") // ToDo: rename to something like /screens
 class ReceiverController (
     @Autowired private val displayService: DisplayService
 ) {

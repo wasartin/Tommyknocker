@@ -1,12 +1,13 @@
 package com.piframe.tommyknocker.model
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
 @Component
-class Album {
+class Album(@Value("\${debug}") private val debugMode: Boolean) {
     private var shuffledDirectory = ArrayList<String>()
     private var directoryOfImages = null
     private var index = 0
@@ -15,7 +16,8 @@ class Album {
     private var fullCycle = 1
 
     init {
-        updateAlbum("/Users/wsartin/dev/workshop/photo-db/posters/jpg") //TODO: Update to env var
+        val directory = if(debugMode) "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs" else "/home/piframe/dev/photo-db/posters/jpg/"
+        updateAlbum(directory)
     }
 
     fun updateAlbum(directory: String): Boolean {
