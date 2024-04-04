@@ -1,13 +1,11 @@
 package com.piframe.tommyknocker.service
 
-import com.piframe.tommyknocker.model.Album
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.io.File
 
 @Service
-class RunnerService {
+class RunnerService(@Value("\${debug}") private val debugMode: Boolean) {
 
     fun run(fileToDisplay: String) {
         killCurrentDisplay()
@@ -31,13 +29,16 @@ class RunnerService {
      */
     fun showPoster(image: File) {
         println("Showing poster -> ${image.absolutePath}")
-        val command = "../display/gradlew -p ../display run"
-        try {
-            Runtime.getRuntime().exec(command)
-        } catch (e: Exception){
-            println("Failure in running display program")
-            println(e)
+        if(!debugMode){
+            val command = "../display/gradlew -p ../display run"
+            try {
+                Runtime.getRuntime().exec(command)
+            } catch (e: Exception){
+                println("Failure in running display program")
+                println(e)
+            }
         }
+
     }
 
 }

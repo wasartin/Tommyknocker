@@ -1,14 +1,17 @@
 package com.piframe.tommyknocker.controller
 
+import com.piframe.tommyknocker.model.ImageRequest
 import com.piframe.tommyknocker.service.DisplayService
+import org.apache.coyote.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.RequestBody
 
 @RestController
-@RequestMapping("/v1/display/images")
-class DisplayController(
+@RequestMapping("/v1/display/images") // ToDo: rename to something like /screens
+class ScreenController(
     @Autowired private val displayService: DisplayService
 ) {
 
@@ -30,6 +33,14 @@ class DisplayController(
         if(success){
             return ResponseEntity.ok(directory)
         }
+        return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
+    }
+
+    @PostMapping("/list")
+    fun setImageList(@RequestBody imagePaths: List<ImageRequest>): ResponseEntity<String> {
+        val success = displayService.setImageList(imagePaths)
+        if(success > 0)
+            return ResponseEntity.ok("Added files")
         return ResponseEntity<String>(HttpStatus.BAD_REQUEST)
     }
 

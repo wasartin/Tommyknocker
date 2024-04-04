@@ -1,20 +1,23 @@
 package com.piframe.tommyknocker.model
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
 @Component
-class Album {
+class Album(@Value("\${debug}") private val debugMode: Boolean) {
     private var shuffledDirectory = ArrayList<String>()
+    private var directoryOfImages = null
     private var index = 0
 
-    // Debugging memory issue
+    // Debugging memory issues
     private var fullCycle = 1
 
     init {
-        updateAlbum("/Users/wsartin/dev/workshop/photo-db/posters/jpg") //TODO: Update to env var
+        val directory = if(debugMode) "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs" else "/home/piframe/dev/photo-db/posters/jpg/"
+        updateAlbum(directory)
     }
 
     fun updateAlbum(directory: String): Boolean {
@@ -34,6 +37,24 @@ class Album {
         return true
     }
 
+    fun updateAlbum(imageFiles: List<ImageRequest>): Int {
+        val fileNames:MutableList<String> = mutableListOf()
+        for(img in imageFiles){
+            if(File(img.filePath).isValidImage()){
+                fileNames.add(img.filePath);
+            }
+        }
+
+        return updateShuffledImages(fileNames)
+    }
+
+    private fun updateShuffledImages(images: List<String>): Int{
+        shuffledDirectory = ArrayList()
+        shuffledDirectory.addAll(images)
+        shuffledDirectory.shuffle()
+        return shuffledDirectory.size
+    }
+
     fun next(): String {
         if (index >= (shuffledDirectory.size)) {
             shuffledDirectory.shuffle()
@@ -45,7 +66,7 @@ class Album {
     }
 
     /**
-     * Call the previous miage
+     * Call the previous image
      * Wraps around if at first Index
      */
     fun previous(): String {
@@ -71,5 +92,4 @@ class Album {
         val extension = this.name.lowercase(Locale.getDefault())
         return extension.endsWith(".jpg") || extension.endsWith(".jpeg") || extension.endsWith(".png")
     }
-
 }
