@@ -19,13 +19,17 @@ class AlbumTest {
 
     @Test
     fun `Given a list of files, when setting a new album, then should create album from list`(){
-        var firstImage = "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs/battleOfJutlan1916.jpeg"
-        var secondImage = "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs/iSpy.png"
+        var firstImage = ImageRequest()
+        firstImage.name = "Battle"
+        firstImage.filePath = "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs/battleOfJutlan1916.jpeg"
+        var secondImage = ImageRequest()
+        secondImage.name = "Other"
+        secondImage.filePath = "/Users/wsartin/dev/workshop/tommyknocker/src/main/resources/imgs/iSpy.png"
 
         val initialAlbum = Album(true)
 
-        //var result = initialAlbum.updateAlbum(listOf(firstImage, secondImage))
-    // assertTrue(result == 2)
+        var result = initialAlbum.updateAlbum(listOf(firstImage, secondImage))
+        assertTrue(result == 2)
     }
 
     @Test
@@ -48,12 +52,5 @@ class AlbumTest {
         val lastImageFromPreviousCommand = album.previous()
 
         assertTrue(lastImage == lastImageFromPreviousCommand)
-    }
-
-    // Why did i want to do this?
-    @Test
-    fun `Update the way album holds data, Not just strings now, but data`(){
-
-
     }
 }
