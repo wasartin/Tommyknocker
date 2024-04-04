@@ -7,7 +7,7 @@ class AlbumTest {
 
     @Test
     fun `Given an Album, when setting a new directory, then should update to a new album`(){
-        val initialAlbum = Album(true)
+        val initialAlbum = Album(debugMode = true)
         val originalContents = initialAlbum.getList()
 
         val input = "/Users/wsartin/dev/newImages/posters"
@@ -34,7 +34,7 @@ class AlbumTest {
 
     @Test
     fun `Given an Album, when requesting next image, then should shuffle images after a full cycle`(){
-        val album = Album(true)
+        val album = Album(debugMode = true)
         val originalContents = album.getList().toString()
 
         for(i in 0 until album.getList().size + 1) {
@@ -47,7 +47,7 @@ class AlbumTest {
 
     @Test
     fun `Given an Album, when requesting the previous image, then it should get the previous image without cycling`(){
-        val album = Album(true)
+        val album = Album(debugMode = true)
         val lastImage = album.getList()[album.getList().size - 1] // silly, but here we are
         val lastImageFromPreviousCommand = album.previous()
 
